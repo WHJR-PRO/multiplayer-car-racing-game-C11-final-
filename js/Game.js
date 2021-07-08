@@ -10,7 +10,6 @@ class Game {
     this.playerMoving = false;
     //C41//TA
     this.leftKeyActive = false;
-    
   }
 
   getState() {
@@ -35,20 +34,16 @@ class Game {
     car1 = createSprite(width / 2 - 50, height - 100);
     car1.addImage("car1", car1_img);
     car1.scale = 0.07;
-  
 
     car2 = createSprite(width / 2 + 100, height - 100);
     car2.addImage("car2", car2_img);
     car2.scale = 0.07;
-   
 
     cars = [car1, car2];
 
     fuels = new Group();
     powerCoins = new Group();
     obstacles = new Group(); //C41 //SA
-
-    
 
     //C41 //BP //SA
     var obstaclesPositions = [
@@ -67,17 +62,23 @@ class Game {
     ];
 
     // Adding fuel sprite in the game
-    this.addSpirtes(fuels, 4, fuelImage, 0.02);
+    this.addSprites(fuels, 4, fuelImage, 0.02);
 
     // Adding coin sprite in the game
-    this.addSpirtes(powerCoins, 18, powerCoinImage, 0.09);
+    this.addSprites(powerCoins, 18, powerCoinImage, 0.09);
 
     //Adding obstacles sprite in the game
-    this.addSpirtes( obstacles, obstaclesPositions.length, obstacle1Image, 0.04, obstaclesPositions );
+    this.addSprites(
+      obstacles,
+      obstaclesPositions.length,
+      obstacle1Image,
+      0.04,
+      obstaclesPositions
+    );
   }
 
   //C41 //SA
-  addSpirtes(spriteGroup, numberOfSprites, spirteImage, scale, positions = []) {
+  addSprites(spriteGroup, numberOfSprites, spriteImage, scale, positions = []) {
     for (var i = 0; i < numberOfSprites; i++) {
       var x, y;
 
@@ -85,16 +86,16 @@ class Game {
       if (positions.length > 0) {
         x = positions[i].x;
         y = positions[i].y;
-        spirteImage = positions[i].image;
+        spriteImage = positions[i].image;
       } else {
         x = random(width / 2 + 150, width / 2 - 150);
         y = random(-height * 4.5, height - 400);
       }
-      var spirte = createSprite(x, y);
-      spirte.addImage("spirte", spirteImage);
+      var sprite = createSprite(x, y);
+      sprite.addImage("sprite", spriteImage);
 
-      spirte.scale = scale;
-      spriteGroup.add(spirte);
+      sprite.scale = scale;
+      spriteGroup.add(sprite);
     }
   }
 
@@ -135,9 +136,6 @@ class Game {
       this.showLife();
       this.showLeaderboard();
 
-      
-     
-
       //index of the array
       var index = 0;
       for (var plr in allPlayers) {
@@ -160,18 +158,16 @@ class Game {
           this.handlePowerCoins(index);
           this.handleObstacleCollision(index); //C41//SA
 
-         // Changing camera position in y direction
+          // Changing camera position in y direction
           camera.position.y = cars[index - 1].position.y;
         }
       }
-     
+
       if (this.playerMoving) {
         player.positionY += 5;
         player.update();
-      
       }
 
-     
       // handling keyboard events
       this.handlePlayerControls();
 
@@ -298,25 +294,24 @@ class Game {
   }
 
   handlePlayerControls() {
-    
-      if (keyIsDown(UP_ARROW)) {
-        this.playerMoving = true;
-        player.positionY += 10;
-        player.update();
-      }
-
-      if (keyIsDown(LEFT_ARROW) && player.positionX > width / 3 - 50) {
-        this.leftKeyActive = true;
-        player.positionX -= 5;
-        player.update();
-      }
-
-      if (keyIsDown(RIGHT_ARROW) && player.positionX < width / 2 + 300) {
-        this.leftKeyActive = false;
-        player.positionX += 5;
-        player.update();
-      }
+    if (keyIsDown(UP_ARROW)) {
+      this.playerMoving = true;
+      player.positionY += 10;
+      player.update();
     }
+
+    if (keyIsDown(LEFT_ARROW) && player.positionX > width / 3 - 50) {
+      this.leftKeyActive = true;
+      player.positionX -= 5;
+      player.update();
+    }
+
+    if (keyIsDown(RIGHT_ARROW) && player.positionX < width / 2 + 300) {
+      this.leftKeyActive = false;
+      player.positionX += 5;
+      player.update();
+    }
+  }
 
   //C41 //SA
   handleObstacleCollision(index) {
@@ -338,7 +333,6 @@ class Game {
     }
   }
 
- 
   showRank() {
     swal({
       title: `Awesome!${"\n"}Rank${"\n"}${player.rank}`,
@@ -360,5 +354,4 @@ class Game {
       confirmButtonText: "Thanks For Playing"
     });
   }
- 
 }
